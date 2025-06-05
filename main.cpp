@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "bst.h"
 using namespace std;
 
 bool validateCredentials(string username, string password,string pos)
@@ -25,13 +26,14 @@ bool validateCredentials(string username, string password,string pos)
         cout<<"Position Not  Recognized"<<endl;
     }
     return true;
-}
+}//End of validate credentials function
 
 int main()
 {
     char ch='*';
-    int choice=1,choice1=1,cnt=3;
+    int choice=0,choice1=1,cnt=3;
     string username, password;
+    addData();
     cout<<"**********************************wELCOME TO BANK MANAGEMENT SYSTEM**********************************"<<endl;
     cout<<setfill(ch)<<setw(120)<<"*"<<endl;
     while(choice!=0)
@@ -121,7 +123,7 @@ int main()
                 // Add staff functionality here
                 while(choice1!=0)
                 {
-                    cout<<"Welcome "<<username<<",you are logged in as Admin."<<endl;
+                    cout<<"Welcome "<<username<<",you are logged in as Staff."<<endl;
                     cout<<"Please select an operation you want to perform :"<<endl;
                     cout<<"Press 1 to Check Account."<<endl;
                     cout<<"Press 2 to Withdraw cash."<<endl;
@@ -159,7 +161,25 @@ int main()
                 break;
             case 3:
                 cout<<"You selected ATM Services."<<endl;
-                // Add ATM services functionality here
+                while(choice1!=0)
+                {
+                cout<<"Press 1 to withdraw cash."<<endl;
+                cout<<"Press 2 to exit."<<endl;
+                cout<<"Enter your choice: ";
+                cin>>choice1;
+                switch(choice1)
+                {
+                    case 1:
+                        cout<<"Withdrawing cash from ATM..."<<endl;
+                        // Add ATM withdraw functionality here
+                        break;
+                    case 2:
+                        cout<<"Exiting ATM services."<<endl;
+                        choice1 = 0; // Exit the ATM menu
+                        break;
+                    default:
+                        cout<<"Invalid choice. Please try again."<<endl;
+                }//End of while loop
                 break;
             case 0:
                 cout<<"Exiting the program."<<endl;
@@ -168,6 +188,7 @@ int main()
                 cout<<"Invalid choice. Please try again."<<endl;
         }
         cout << endl; // Add a new line for better readability
-    }
+    }//End of switch case
+}//End of while loop
     return 0;
-}
+}//End of main function
