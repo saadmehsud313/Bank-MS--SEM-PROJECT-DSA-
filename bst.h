@@ -81,7 +81,7 @@ Node* searchInTree(Node* root,int id)
         {
             return root;
         }
-        else if(root < root->getId())
+        else if(id < root->getId())
         {
             root=root->getLeft();
         }
@@ -89,9 +89,8 @@ Node* searchInTree(Node* root,int id)
         {
             root=root->getRight();
         }
-
-        return NULL;
     }
+    return NULL;
 }//End of search in tree
 void display(Node* root)
 {
@@ -102,19 +101,19 @@ void display(Node* root)
         display(root->getRight());
     }
 }
-void addData()
+Node* addData(Node* temp,string fileName)
 {
-    Node* root = new Node();
+    Node* root = temp;
     ifstream file;
     int id;
     string num;
     string pass;
     string name;
-    file.open("admin.txt");
+    file.open(fileName);
     if(!file.is_open())
     {
         cout<<"Error opening file."<<endl;
-        return;
+        return NULL;
     }
     while(!file.eof())
     {
@@ -123,14 +122,11 @@ void addData()
             getline(file,num,',');
             getline(file,name,',');
             getline(file,pass);
-            cout<<"ID:"<<num<<endl;
             id=stoi(num);
-            cout<<"ID:id:"<<id<<endl;
         } catch (const std::invalid_argument& e) {
             continue; // Skip this entry if ID is not valid
         }
          root=insertInTree(root,id,name,pass);
     }//End of while loop
-    display(root);
-    return;
+    return root;
 }

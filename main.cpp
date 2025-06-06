@@ -4,45 +4,48 @@
 #include "bst.h"
 using namespace std;
 
-bool validateCredentials(string username, string password,string pos)
+bool validateCredentials(Node* root,int id, string password)
 {
-    cout<<"Position:"<<pos<<endl;
-    string usn="Saad",pass="1234";
-
-    if(pos== "admin")
+    Node* temp=NULL;
+    temp=searchInTree(root,id);
+    if(temp == NULL)//Checks if the user exists or not 
     {
-        cout<<"Admin Selected"<<endl;
-
-    }
-    else if(pos == "staff")
+        cout<<"ID:"<< id <<" does not exist in the record."<<endl;
+        return false;
+    }//End of if
+    else
     {
-        cout<<"Staff Selected"<<endl;
-    }
-    else if(pos == "atm")
-    {
-        cout<<"ATM Selected"<<endl;
-    }
-    else{
-        cout<<"Position Not  Recognized"<<endl;
-    }
-    return true;
+        if(temp->getPassword() == password )
+        {
+            cout<<"Welcome "<<temp->getUsername()<< " To Bank Management."<<endl;
+            return true;
+        }//end of nested id 
+        else
+        {
+            cout<<"Wrong Password"<<endl;
+            return false;
+        }//End of nested else
+    }//End of else
 }//End of validate credentials function
 
 int main()
 {
-    char ch='*';
-    int choice=0,choice1=1,cnt=3;
+    Node* adminRoot=new Node();
+    Node* staffRoot=new Node();
+    int choice=1,choice1=1,cnt=3,id=0;
     string username, password;
-    addData();
+    adminRoot = addData(adminRoot,"admin.txt");
+    staffRoot = addData(staffRoot,"staff.txt");
     cout<<"**********************************wELCOME TO BANK MANAGEMENT SYSTEM**********************************"<<endl;
-    cout<<setfill(ch)<<setw(120)<<"*"<<endl;
+    cout<<setfill('*')<<setw(120)<<"*"<<endl;
     while(choice!=0)
     {
+        
         cout<<"    Please Select Your Role     "<<endl;
         cout<<"    1.For Admin      "<<endl;
         cout<<"    2. For Staff     "<<endl;
         cout<<"    3. For ATM Services     "<<endl;
-        cout<<"     0.For Exit        "<<endl;
+        cout<<"    0.For Exit        "<<endl;
         cout<<"Enter your choice: ";
         cin>>choice;
         
@@ -52,16 +55,17 @@ int main()
                 do{
                 cout<<"Remaining Attempts: "<<cnt<<endl;
                 cout<<"Please Insert Your Credentials:"<<endl;
-                cout<<"Username: ";
-                cin>>username;
+                cout<<"ID: ";
+                cin>>id;
                 cout<<"Password: ";
+                cin.ignore();
+                cin.clear();
                 cin>>password;
                 cnt--;
                 cnt == 0 ? cout<<"You have exhausted all attempts. Exiting..."<<endl : cout<<endl; 
-            } while(!validateCredentials(username, password,"admin") && cnt != 0);
-                while(choice1!=0)
+            } while(!validateCredentials(adminRoot,id, password) && cnt != 0);
+                while(choice1!=0 && cnt != 0)
                 {
-                    cout<<"Welcome "<<username<<",you are logged in as Admin."<<endl;
                     cout<<"Please select an operation you want to perform :"<<endl;
                     cout<<"Press 1 to Create new account."<<endl;
                     cout<<"Press 2 to Delete existing account."<<endl;
@@ -113,15 +117,17 @@ int main()
                 do{
                 cout<<"Remaining Attempts: "<<cnt<<endl;
                 cout<<"Please Insert Your Credentials:"<<endl;
-                cout<<"Username: ";
-                cin>>username;
+                cout<<"ID: ";
+                cin>>id;
                 cout<<"Password: ";
-                cin>>password;
+                cin.clear();
+                cin.ignore();
+                getline(cin,password);
                 cnt--;
                 cnt == 0 ? cout<<"You have exhausted all attempts. Exiting..."<<endl : cout<<endl ;
-                } while(!validateCredentials(username, password,"staff") && cnt != 0);
+                } while(!validateCredentials( staffRoot , id , password ) && cnt != 0);
                 // Add staff functionality here
-                while(choice1!=0)
+                while(choice1!=0 && cnt!=0)
                 {
                     cout<<"Welcome "<<username<<",you are logged in as Staff."<<endl;
                     cout<<"Please select an operation you want to perform :"<<endl;
@@ -161,7 +167,7 @@ int main()
                 break;
             case 3:
                 cout<<"You selected ATM Services."<<endl;
-                while(choice1!=0)
+                while(choice1 != 0)
                 {
                 cout<<"Press 1 to withdraw cash."<<endl;
                 cout<<"Press 2 to exit."<<endl;
@@ -189,6 +195,7 @@ int main()
         }
         cout << endl; // Add a new line for better readability
     }//End of switch case
+    cnt=3;
 }//End of while loop
     return 0;
 }//End of main function
