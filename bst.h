@@ -13,7 +13,15 @@ class Node{
     Node* left;
     Node* right;
     public:
-    Node(string uname,string pass, int id_num)
+    Node()
+    {
+        username=" ";
+        password=" ";
+        id=0;
+        left=NULL;
+        right=NULL;
+    }
+   Node(string uname,string pass, int id_num)
     {
         this->username = uname;
         this->password = pass;
@@ -25,9 +33,9 @@ class Node{
     {
         this->left=lft;
     }//End of setLeft
-    void setRight(Node* right)
+    void setRight(Node* riht)
     {
-        this->right=right;
+        this->right=riht;
     }
     string getUsername(){
         return username;
@@ -48,36 +56,43 @@ class Node{
     }
 };//End of Node Class
 
-void insertInTree(Node* root,int id,string username, string password)
-{
-    Node* temp=root;
-
-    if(root == NULL)
-    {
-        root=new Node(username,password,id);
-        return;
+Node* insertInTree(Node* root, int id, string username, string password) {
+    if (root == nullptr || root->getId() == 0) {
+        return new Node(username, password, id);
     }
+
+    if (id < root->getId()) {
+        root->setLeft(insertInTree(root->getLeft(), id, username, password));
+    } else if (id > root->getId()) {
+        root->setRight(insertInTree(root->getRight(), id, username, password));
+    } else {
+        cout<<"This User Already Exists"<<endl;
+        return root;
+    }
+
+    return root;
+}//End of insert in tree
+
+Node* searchInTree(Node* root,int id)
+{
     while(root != NULL)
     {
-        temp=root;
         if(id == root->getId())
         {
-            cout<<"This id already exists."<<endl;
-            return;
+            return root;
         }
-        else if(id<root->getId())
+        else if(root < root->getId())
         {
-            root = root->getLeft();
+            root=root->getLeft();
         }
-        else
+        else 
         {
-            root = root->getRight();
+            root=root->getRight();
         }
-    }//End of while
-    id<temp->getId() ? temp->setLeft(new Node(username,password,id)) : temp->setRight(new Node(username,password,id));
 
-    return;
-}//End of insertInTree
+        return NULL;
+    }
+}//End of search in tree
 void display(Node* root)
 {
     if(root != NULL)
@@ -89,7 +104,7 @@ void display(Node* root)
 }
 void addData()
 {
-    Node* root = NULL;
+    Node* root = new Node();
     ifstream file;
     int id;
     string num;
@@ -106,15 +121,16 @@ void addData()
         
         try {
             getline(file,num,',');
-            
             getline(file,name,',');
-            getline(file,pass,',');
+            getline(file,pass);
+            cout<<"ID:"<<num<<endl;
+            id=stoi(num);
+            cout<<"ID:id:"<<id<<endl;
         } catch (const std::invalid_argument& e) {
-            cout << "Invalid ID format in file: " << num << endl;
             continue; // Skip this entry if ID is not valid
         }
-        insertInTree(root,stoi(num),name,pass);
-    }
+         root=insertInTree(root,id,name,pass);
+    }//End of while loop
     display(root);
     return;
 }
