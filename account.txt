@@ -1,0 +1,10 @@
+1024,Adeel Khan,pass123,15000.75,Active,Savings
+2391,Nadia Riaz,secure456,2340.50,Inactive,Current
+3482,Fahad Malik,welcome99,8345.00,Active,Savings
+4510,Zainab Ahmed,hello@321,120.25,Blocked,Current
+5629,Imran Qureshi,imran!123,9500.10,Active,Savings
+6743,Maria Tariq,password,435.65,Inactive,Current
+7815,Ali Raza,alpha789,20100.00,Active,Savings
+8902,Farah Siddiq,key@2025,340.00,Blocked,Current
+9014,Salman Iqbal,openme88,560.30,Active,Savings
+1003,Ayesha Latif,pass@000,0.00,Inactive,Current

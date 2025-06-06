@@ -32,12 +32,14 @@ int main()
 {
     Node* adminRoot=new Node();
     Node* staffRoot=new Node();
+    Node* accountRoot=new Node();
     int choice=1,choice1=1,cnt=3,id=0;
     string username, password;
     adminRoot = addData(adminRoot,"admin.txt");
     staffRoot = addData(staffRoot,"staff.txt");
-    cout<<"**********************************wELCOME TO BANK MANAGEMENT SYSTEM**********************************"<<endl;
-    cout<<setfill('*')<<setw(120)<<"*"<<endl;
+    cout<<setfill('*')<<setw(100)<<"*"<<endl;
+    cout<<"**********************************WELCOME TO BANK MANAGEMENT SYSTEM*********************************"<<endl;
+    cout<<setfill('*')<<setw(100)<<"*"<<endl;
     while(choice!=0)
     {
         
