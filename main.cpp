@@ -2,8 +2,18 @@
 #include <iomanip>
 #include <string>
 #include "avl.h"
+#include "linked_list.h"
 using namespace std;
 
+int genearteID(Node* root)
+{
+    while(root-getRight() !=NULL)
+    {
+        root = root->getRight();
+    }
+
+    return root->getID() + 1;;
+}//Geneaates id for new user
 bool validateCredentials(Node* root,int id, string password)
 {
     Node* temp=NULL;
@@ -85,6 +95,35 @@ int main()
                             cout<<"Enter The Name Of the Account (NAME USED IN CNIC):";
                             cin>>username;
                             cout<<"Generating ID.......";
+                            id = genearteID(accountRoot);
+                            cout<<"ID fo account is: "<<id<<endl;
+                            cout<<"Enter Password for the account: ";
+                            cin.ignore();
+                            getline(cin, password);
+                            cout<<"Select Account Type:"<<endl;
+                            cout<<"1. Savings"<<endl;   
+                            cout<<"2. Current"<<endl;
+                            cout<<"3. Default"<<endl;
+                            int accountType;
+                            cin>>accountType;
+                            string type;
+                            switch(accountType)
+                            {
+                                case 1:
+                                    type = "Savings";
+                                    break;
+                                case 2:
+                                    type = "Current";
+                                    break;
+                                case 3:
+                                    type = "Default";
+                                    break;
+                                default:
+                                    cout<<"Invalid account type selected. Defaulting to Savings."<<endl;
+                                    type = "Savings";
+                            }
+                            Account newAccount(id, 0, username, "Active", type, 0.0, password);
+                            accountRoot = insertInTree(accountRoot, id, username, password);
                             break;
                         case 2:
                             cout<<"Deleting existing account..."<<endl;
