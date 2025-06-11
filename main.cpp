@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include "bst.h"
+#include "avl.h"
 using namespace std;
 
 bool validateCredentials(Node* root,int id, string password)
