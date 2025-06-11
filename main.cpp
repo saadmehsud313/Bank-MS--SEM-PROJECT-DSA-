@@ -82,7 +82,9 @@ int main()
                     {
                         case 1:
                             cout<<"Creating new account..."<<endl;
-                            // Add account creation functionality here
+                            cout<<"Enter The Name Of the Account (NAME USED IN CNIC):";
+                            cin>>username;
+                            cout<<"Generating ID.......";
                             break;
                         case 2:
                             cout<<"Deleting existing account..."<<endl;

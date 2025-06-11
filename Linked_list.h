@@ -22,6 +22,7 @@ class Account{
         string name;
         string status;//Active ,Inactive or Blocked
         string type;//Savings Current or Default
+        string password;
         float balance;
         Transaction* transactionHead;
         public:
@@ -30,12 +31,13 @@ class Account{
             id = 0;
             pin = 0;
             name = "";
+            passwrod="";
             status = "active";
             type = "savings";
             balance = 0.0;
             transactionHead = nullptr;
         }//End of Default Constructor
-        Node(int id, int pin, string name, string status, string type, float balance)
+        Node(int id, int pin, string name, string status, string type, float balance,string password)
         {
             this->id = id;
             this->pin = pin;
@@ -48,7 +50,7 @@ class Account{
         }//End of Parameterized Constructor
 
         void addTransaction(string type,float amount){
-            if(type == withdraw && amount> balance){
+            if(type == "withdraw" && amount> balance){
                 cout<<"Ghareeb Ul Ghurba"<<endl;
                 return;
             }//End of if 
