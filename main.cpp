@@ -7,12 +7,12 @@ using namespace std;
 
 int genearteID(Node* root)
 {
-    while(root-getRight() !=NULL)
+    while(root->getRight() !=NULL)
     {
         root = root->getRight();
     }
-
-    return root->getID() + 1;;
+    cout<<"ID:"<< root->getId()  <<endl;
+    return root->getId() + 1;;
 }//Geneaates id for new user
 bool validateCredentials(Node* root,int id, string password)
 {
@@ -42,9 +42,11 @@ int main()
 {
     Node* adminRoot=new Node();
     Node* staffRoot=new Node();
-    Node* accountRoot=new Node();
+    accountNode* accountRoot=new accountNode();
     int choice=1,choice1=1,cnt=3,id=0;
     string username, password;
+    int accountType=0;  
+    string typ;
     adminRoot = addData(adminRoot,"admin.txt");
     staffRoot = addData(staffRoot,"staff.txt");
     cout<<setfill('*')<<setw(100)<<"*"<<endl;
@@ -104,26 +106,25 @@ int main()
                             cout<<"1. Savings"<<endl;   
                             cout<<"2. Current"<<endl;
                             cout<<"3. Default"<<endl;
-                            int accountType;
+                            
                             cin>>accountType;
-                            string type;
+                            
                             switch(accountType)
                             {
                                 case 1:
-                                    type = "Savings";
+                                    typ = "Savings";
                                     break;
                                 case 2:
-                                    type = "Current";
+                                    typ = "Current";
                                     break;
                                 case 3:
-                                    type = "Default";
+                                    typ = "Default";
                                     break;
                                 default:
-                                    cout<<"Invalid account type selected. Defaulting to Savings."<<endl;
-                                    type = "Savings";
+                                    cout<<"Invalid account typ selected. Defaulting to Savings."<<endl;
+                                    typ = "Savings";
                             }
-                            Account newAccount(id, 0, username, "Active", type, 0.0, password);
-                            accountRoot = insertInTree(accountRoot, id, username, password);
+                            // accountRoot = insertInTree(accountRoot, id, username, password, typ);
                             break;
                         case 2:
                             cout<<"Deleting existing account..."<<endl;
@@ -228,14 +229,15 @@ int main()
                         break;
                     default:
                         cout<<"Invalid choice. Please try again."<<endl;
-                }//End of while loop
+                    }//End of switch case
+                    }//End of while loop
                 break;
             case 0:
                 cout<<"Exiting the program."<<endl;
                 break;
             default:
                 cout<<"Invalid choice. Please try again."<<endl;
-        }
+            
         cout << endl; // Add a new line for better readability
     }//End of switch case
     cnt=3;

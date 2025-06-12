@@ -2,7 +2,8 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
-
+#include <algorithm>
+// #include "Linked_list.h"
 using namespace std;
 
 class Node {
@@ -33,6 +34,40 @@ public:
     void setHeight(int h) { height = h; }
     int getHeight() { return height; }
 };
+class accountNode: public Node{
+        private:
+        int pin;
+        string type;
+        string status; // Active, Inactive, Blocked
+        float balance;
+        public:
+        accountNode() : Node()  // Call the base class constructor
+        {
+            Node();
+            pin = 0;
+            type = "savings";
+            status = "active";
+            balance = 0.0;
+        }//End of Default Constructor
+        accountNode(int pin ,string type,string status, float balance ) {
+            this->pin = pin;
+            this->type = type;
+            this->status = status;
+            this->balance = balance;
+        }//End of parameterized constructor
+        int getPin() { return pin; }
+        string getType() { return type; }
+        string getStatus() { return status; }
+        float getBalance() { return balance; }
+        void setBalance(float bal) { 
+            if (bal >= 0) {
+                balance = bal; 
+            } else {
+                cout << "Balance cannot be negative." << endl;
+            }
+        }//End of setBalance
+        void setPin(int p) { pin = p; }
+};//End of class accountNode
 
 int getHeight(Node* node) {
     return node ? node->getHeight() : 0;
@@ -62,7 +97,7 @@ Node* leftRotate(Node* x) {
     y->setLeft(x);
     x->setRight(T2);
 
-    x->setHeight(1 + max(getHeight(x->getLeft()), getHeight(x->getRight())));
+    x->setHeight(1 + max(getHeight(x->getLeft()),  getHeight(x->getRight())));
     y->setHeight(1 + max(getHeight(y->getLeft()), getHeight(y->getRight())));
 
     return y;

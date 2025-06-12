@@ -1,20 +1,20 @@
-#inlcude <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <chrono>
 #include <ctime>
 #include <iomanip>
-#include "bst.h"
+// #include "avl.h"
 
 using namespace std;
-using namespace std::Chrono;
+using namespace std::chrono;
 struct Transaction{
     int id;
     string type;//Deposit or withdraw
     float ammount;
     string date;
     Transaction* next;
-}
+};
 class Account{
         private:
         int id;
@@ -26,18 +26,18 @@ class Account{
         float balance;
         Transaction* transactionHead;
         public:
-        Node()
+        Account()
         {
             id = 0;
             pin = 0;
             name = "";
-            passwrod="";
+            password="";
             status = "active";
             type = "savings";
             balance = 0.0;
             transactionHead = nullptr;
         }//End of Default Constructor
-        Node(int id, int pin, string name, string status, string type, float balance,string password)
+        Account(int id, int pin, string name, string status, string type, float balance,string password)
         {
             this->id = id;
             this->pin = pin;
