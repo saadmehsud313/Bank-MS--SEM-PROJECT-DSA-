@@ -1,11 +1,11 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include "avl.h"
 #include "linked_list.h"
+#include "Account.h"
 using namespace std;
 
-int genearteID(Node* root)
+int genearteID(AccountNode* root)
 {
     while(root->getRight() !=NULL)
     {
@@ -14,9 +14,9 @@ int genearteID(Node* root)
     cout<<"ID:"<< root->getId()  <<endl;
     return root->getId() + 1;;
 }//Geneaates id for new user
-bool validateCredentials(Node* root,int id, string password)
+bool validateCredentials(AccountNode* root,int id, string password)
 {
-    Node* temp=NULL;
+    AccountNode* temp=NULL;
     temp=searchInTree(root,id);
     if(temp == NULL)//Checks if the user exists or not 
     {
@@ -40,10 +40,10 @@ bool validateCredentials(Node* root,int id, string password)
 
 int main()
 {
-    Node* adminRoot=new Node();
-    Node* staffRoot=new Node();
-    accountNode* accountRoot=new accountNode();
-    int choice=1,choice1=1,cnt=3,id=0;
+    AccountNode* adminRoot=new AccountNode();
+    AccountNode* staffRoot=new AccountNode();
+    AccountNode* accountRoot=new AccountNode();
+    int choice=1,choice1=1,cnt=3,id=0, pin=0, status=1; // status: 1 for active, 0 for inactive
     string username, password;
     int accountType=0;  
     string typ;
@@ -102,13 +102,13 @@ int main()
                             cout<<"Enter Password for the account: ";
                             cin.ignore();
                             getline(cin, password);
+                            cout<<"Enter PIN for the account: ";
+                            cin>>pin;
                             cout<<"Select Account Type:"<<endl;
                             cout<<"1. Savings"<<endl;   
                             cout<<"2. Current"<<endl;
                             cout<<"3. Default"<<endl;
-                            
                             cin>>accountType;
-                            
                             switch(accountType)
                             {
                                 case 1:
@@ -124,7 +124,8 @@ int main()
                                     cout<<"Invalid account typ selected. Defaulting to Savings."<<endl;
                                     typ = "Savings";
                             }
-                            // accountRoot = insertInTree(accountRoot, id, username, password, typ);
+                            
+                            insertAccountInTree(accountRoot, id, username, password, "active", typ, 1222.0, pin);
                             break;
                         case 2:
                             cout<<"Deleting existing account..."<<endl;

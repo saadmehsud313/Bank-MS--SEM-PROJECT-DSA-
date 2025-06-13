@@ -1,0 +1,11 @@
+id,pin,name,password,type,balance,status
+1001,1234,Ali Khan,pass123,Savings,50000,Active
+1002,5678,Ayesha Noor,ayesha321,Current,120000,Active
+1003,9876,Omar Farooq,omar@456,Savings,7500,Inactive
+1004,4321,Maria Saeed,m@ria789,Current,23000,Active
+1005,2468,Hassan Raza,hasan000,Savings,100000,Blocked
+1006,1357,Zainab Abbas,zainab999,Current,40000,Active
+1007,8642,Bilal Ahmed,bilal321,Savings,95000,Inactive
+1008,3141,Fatima Tariq,fatima#1,Savings,67000,Active
+1009,7865,Usman Javed,usman007,Current,21000,Blocked
+1010,1212,Noor Ul Ain,noor1234,Savings,88000,Active
