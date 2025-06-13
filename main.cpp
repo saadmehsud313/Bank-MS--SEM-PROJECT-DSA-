@@ -4,51 +4,59 @@
 #include "linked_list.h"
 #include "Account.h"
 using namespace std;
-
-int genearteID(AccountNode* root)
+template <typename T>
+int genearteID(AVLTree<T>* root)
 {
-    while(root->getRight() !=NULL)
+    if(root == nullptr)
     {
-        root = root->getRight();
+        cout<<"Tree is empty. Generating ID as 1."<<endl;
+        return 1; // If tree is empty, start with ID 1
     }
-    cout<<"ID:"<< root->getId()  <<endl;
-    return root->getId() + 1;;
-}//Geneaates id for new user
-bool validateCredentials(AccountNode* root,int id, string password)
-{
-    AccountNode* temp=NULL;
-    temp=searchInTree(root,id);
-    if(temp == NULL)//Checks if the user exists or not 
+    T* node = root->search(1001);
+    while(node->getRight() !=NULL)
     {
-        cout<<"ID:"<< id <<" does not exist in the record."<<endl;
-        return false;
-    }//End of if
+        node = node->getRight();
+    }
+    cout<<"ID:"<< node->getId()  <<endl;
+    return node->getId() + 1;;
+}//Geneaates id for new user
+template <typename C>
+bool validateCredentials(AVLTree<C>* root,int id, string password)
+{
+   C* user = root->search(id);
+   if(user == nullptr)
+   {
+       cout<<"User not found."<<endl;
+       return false;
+   }
+    if(user->getPassword() == password)
+    {
+         cout<<"Credentials Validated Successfully."<<endl;
+         return true;
+    }
     else
     {
-        if(temp->getPassword() == password )
-        {
-            cout<<"Welcome "<<temp->getUsername()<< " To Bank Management."<<endl;
-            return true;
-        }//end of nested id 
-        else
-        {
-            cout<<"Wrong Password"<<endl;
-            return false;
-        }//End of nested else
-    }//End of else
+         cout<<"Invalid Credentials. Please try again."<<endl;
+         return false;
+    }
 }//End of validate credentials function
 
 int main()
 {
-    AccountNode* adminRoot=new AccountNode();
-    AccountNode* staffRoot=new AccountNode();
-    AccountNode* accountRoot=new AccountNode();
+    AVLTree<UserNode>* adminRoot = new AVLTree<UserNode>();
+    AVLTree<UserNode>* staffRoot=new AVLTree<UserNode>();
+    AVLTree<AccountNode>* accountRoot=new AVLTree<AccountNode>();
     int choice=1,choice1=1,cnt=3,id=0, pin=0, status=1; // status: 1 for active, 0 for inactive
     string username, password;
     int accountType=0;  
     string typ;
     adminRoot = addData(adminRoot,"admin.txt");
+    adminRoot->displayInOrder();
+    cout<<setfill('*')<<setw(100)<<"*"<<endl;
     staffRoot = addData(staffRoot,"staff.txt");
+    adminRoot->displayInOrder();
+    cout<<setfill('*')<<setw(100)<<"*"<<endl;
+    accountRoot = addData(accountRoot,"accounts.txt");
     cout<<setfill('*')<<setw(100)<<"*"<<endl;
     cout<<"**********************************WELCOME TO BANK MANAGEMENT SYSTEM*********************************"<<endl;
     cout<<setfill('*')<<setw(100)<<"*"<<endl;
@@ -124,8 +132,8 @@ int main()
                                     cout<<"Invalid account typ selected. Defaulting to Savings."<<endl;
                                     typ = "Savings";
                             }
-                            
-                            insertAccountInTree(accountRoot, id, username, password, "active", typ, 1222.0, pin);
+                            accountRoot->insertNode(new AccountNode(id, username, password, "active", typ, 0.0, pin));
+                            cout<<"Account created successfully with ID: "<<id<<endl;   
                             break;
                         case 2:
                             cout<<"Deleting existing account..."<<endl;
@@ -170,7 +178,7 @@ int main()
                 getline(cin,password);
                 cnt--;
                 cnt == 0 ? cout<<"You have exhausted all attempts. Exiting..."<<endl : cout<<endl ;
-                } while(!validateCredentials( staffRoot , id , password ) && cnt != 0);
+                } while(!validateCredentials(staffRoot , id , password ) && cnt != 0);
                 // Add staff functionality here
                 while(choice1!=0 && cnt!=0)
                 {
