@@ -60,7 +60,7 @@ class UserNode{
         return id; 
     }
 
-};//End of struct UserNode
+};//End of class UserNode
 class AccountNode{
         private: 
         int pin;
@@ -116,7 +116,9 @@ class AccountNode{
         void setRight(AccountNode* riht) { right = riht; }
         string getUsername() { return username; }
         string getPassword() { return password; }
-        int getId() { return id; }  
+        int getId() { 
+            return this->id;
+         }  
         void setHeight(int h) { 
             height = h;
         }//End of setHeight
@@ -192,6 +194,7 @@ private:
             node->setRight(rightRotate(node->getRight()));
             return leftRotate(node);
         }
+        cout << "Inserted Node: " << newNode->getId() << ", Balance: " << balance << endl;
 
         return node;
     }
@@ -270,11 +273,13 @@ AVLTree<AccountNode>* addData(AVLTree<AccountNode>* root, const string& filename
         return root;
     }//End of if 
     stringstream ss;
-    string line,username, password, type, status,idStr, pinStr,balanceStr;
-    int id, pin;
+    string line;
     float balance;
     while(getline(file, line))
     {
+        
+    string username, password, type, status,idStr, pinStr,balanceStr;
+    int id, pin;
         ss.clear();
         ss.str(line);
         cout<<"EXECUTING WHILE LOOP IN ADD DATA"<<endl;
@@ -286,11 +291,14 @@ AVLTree<AccountNode>* addData(AVLTree<AccountNode>* root, const string& filename
             getline(ss, type, ',');
             getline(ss, balanceStr, ',');
             getline(ss, status,',');
+
             id = stoi(idStr);
             pin = stoi(pinStr);
             balance = stof(balanceStr);
+            cout<<"ID: "<<id<<", PIN: "<<pin<<", Username: "<<username<<", Password: "<<password<<", Type: "<<type<<", Balance: "<<balance<<", Status: "<<status<<endl;
             root->insertNode(new AccountNode(id, username, password, status, type, balance, pin));
-        
+            cout<<"Account with ID: "<<id<<" has been added successfully."<<endl;
+            cout<<"ROOT: "<<root<<endl;
         }catch(exception& e)
         {
             cout << "Error reading data from file: " << filename << endl;
